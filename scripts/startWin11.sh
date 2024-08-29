@@ -33,21 +33,13 @@ if [ "$failed" = "true" ]; then
 fi
 hyprctl keyword monitor $monitorName,disable
 
-# Attach samson mic and xbox controller
-# They are not included in the vm xml because they might not always be plugged in
+# Attach xbox controller
+# It is not included in the vm xml because it might not always be plugged in
 # and in that case the vm would fail to start
-micRes=$(/home/jelly/.local/bin/vfio/samsonMic.sh attach 2>&1)
+xboxRes=$(/home/jelly/.local/bin/vfio/xboxController.sh attach 2>&1)
 if [ $? -ne 0 ]; then
     notify-send \
-      -u critical -t 0 \
-      -a "Win11" \
-      -i $iconLocation \
-      "Failed to attach Samson mic" "$micRes"
-fi
-xboxRes=$(/home/jelly/.local/bin/vfio/xboxControllerVm.sh 2>&1)
-if [ $? -ne 0 ]; then
-    notify-send \
-      -u critical -t 0 \
+      -u normal -t 3000 \
       -a "Win11" \
       -i $iconLocation \
       "Failed to attach xbox controller" "$xboxRes"

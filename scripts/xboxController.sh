@@ -8,11 +8,16 @@
 # by clicking on the attached usb device (just remember to change the usb port if you have
 # more than one usb device you want to attach)
 
+if [[ $(virsh --connect qemu:///system domstate win11) != "running" ]]; then
+  echo "Vm win11 is not running"
+  exit 0
+fi
+
 if [[ "$1" == "detach" ]]; then
-  virsh --connect qemu:///system detach-device win11 --file /home/jelly/AltreCose/vfio/devices/samsonMic.xml --current
+  virsh --connect qemu:///system detach-device win11 --file /home/jelly/AltreCose/vfio/devices/xboxController.xml --live
   exit 0 # Never return error
 elif [[ "$1" == "attach" ]]; then
-  virsh --connect qemu:///system attach-device win11 --file /home/jelly/AltreCose/vfio/devices/samsonMic.xml --current
+  virsh --connect qemu:///system attach-device win11 --file /home/jelly/AltreCose/vfio/devices/xboxController.xml --live
 else
   echo "parameters:
   detach: remove Samson mic from vm

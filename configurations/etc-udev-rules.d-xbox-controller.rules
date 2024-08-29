@@ -1,0 +1,4 @@
+# This rule executes when the xbox controller (prod. id=581a, vendor id=24c6) is plugged in or removed
+# It executes a script that adds or removes the controller from the passed through devices of my vm
+ACTION=="add", SUBSYSTEM=="usb", ENV{PRODUCT}=="24c6/581a/101", RUN+="/home/jelly/.local/bin/vfio/xboxController.sh attach"
+ACTION=="remove", SUBSYSTEM=="usb", ENV{PRODUCT}=="24c6/581a/101", RUN+="/home/jelly/.local/bin/vfio/xboxController.sh detach"
