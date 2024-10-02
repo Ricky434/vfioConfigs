@@ -2,6 +2,7 @@
 
 vmName="win11"
 monitorName="DP-1"
+secondMonitorName="HDMI-A-1"
 iconLocation="/home/jelly/.local/share/icons/Win11.png"
 failed="false"
 
@@ -31,7 +32,11 @@ fi
 if [ "$failed" = "true" ]; then
   exit 1
 fi
-hyprctl keyword monitor $monitorName,disable
+if [[ $XDG_SESSION_DESKTOP == "KDE" ]]; then
+  kscreen-doctor output.$monitorName.disable
+elif [[ $XDG_SESSION_DESKTOP == "Hyprland" ]]; then
+  hyprctl keyword monitor $monitorName,disable
+fi
 
 # Attach xbox controller
 # It is not included in the vm xml because it might not always be plugged in
@@ -54,5 +59,11 @@ notify-send \
   -i $iconLocation \
   "Win11 shut down" "$result"
 
-hyprctl keyword monitor $monitorName,1920x1080,0x0,1,bitdepth,10;
-hyprctl dispatch closewindow title:"$vmName on QEMU/KVM"
+if [[ $XDG_SESSION_DESKTOP == "KDE" ]]; then
+  kscreen-doctor output.$monitorName.enable
+  kscreen-doctor output.$secondMonitorName.position.1920,0
+  kscreen-doctor output.$monitorName.primary
+elif [[ $XDG_SESSION_DESKTOP == "Hyprland" ]]; then
+  hyprctl keyword monitor $monitorName,1920x1080,0x0,1,bitdepth,10;
+  hyprctl dispatch closewindow title:"$vmName on QEMU/KVM"
+fi

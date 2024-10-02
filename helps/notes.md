@@ -56,7 +56,6 @@ If network is not working, it could be blocked by your firewall. To try set FORW
 **Unrelated**
 
 Resizable bar + above 4GB bla bla is actually good for performance
-too bad it's not supported by my cpu (i think it is by my gpu though)
 also it shouldn't have impact on vm config or stability
 
 ---
