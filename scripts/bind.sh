@@ -21,10 +21,16 @@ vfio() {
 nvidia() {
     sudo modprobe -r vfio-pci
 
+    # Temporarily disable config file that sets vfio as softdep for nvidia
+    vfio_conf="/etc/modprobe.d/vfio.conf"
+    sudo mv $vfio_conf $vfio_conf.disabled
+    
     sudo modprobe nvidia_drm
     sudo modprobe nvidia_modeset
     sudo modprobe nvidia_uvm
     sudo modprobe nvidia
+
+    sudo mv $vfio_conf.disabled $vfio_conf
 
     sudo sh -c "echo -n $AUDIO_ID > /sys/bus/pci/drivers/snd_hda_intel/bind" || echo "Failed to bind $AUDIO_ID"
 }

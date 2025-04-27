@@ -2,7 +2,7 @@
 
 # This script checks if the gpu that should be passed through is bound to vfio, if it isn't it stops qemu, avoiding getting libvirt stuck forever
 #
-# After that, it reserves only 2 cores for the host while the vm is running, and it allocates hugepages for it
+# After that, it reserves only 1 core for the host while the vm is running, and it allocates hugepages for it
 # It also unmounts drives that will be used by the vm in order to avoid corrupting them
 
 vmName=$1
@@ -74,9 +74,9 @@ if [ "$command" = "prepare" ]; then
 	    umount /mnt/emu
 	fi
 elif [ "$command" = "started" ]; then
-    systemctl set-property --runtime -- system.slice AllowedCPUs=0,8,1,9
-    systemctl set-property --runtime -- user.slice AllowedCPUs=0,8,1,9
-    systemctl set-property --runtime -- init.scope AllowedCPUs=0,8,1,9
+    systemctl set-property --runtime -- system.slice AllowedCPUs=0,8
+    systemctl set-property --runtime -- user.slice AllowedCPUs=0,8
+    systemctl set-property --runtime -- init.scope AllowedCPUs=0,8
 
 elif [ "$command" = "release" ]; then
     systemctl set-property --runtime -- system.slice AllowedCPUs=0-15
