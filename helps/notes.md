@@ -19,16 +19,17 @@ No need to blacklist nvidia modules in bootloader
 
 ---
 # Useful stuff
-- `bind.sh` script to bind either vfio or nvidia modules without having to reboot
-> [!NOTE]
-> unbinding nvidia modules requires killing all processes using the gpu, including the window manager
-- scripts to quickly add or remove xbox controller and samson mic to (running) vm
-- udev rules to automatically add and remove xbox controller and samson mic to vm when plugged in/unplugged (mic only has the remove part, since i don'twant to always add it to the vm). This is to prevent the vm from failing to boot up because i forgot to remove the devices from its configuration after unplugging them.
 - libvirt hook for:
     - checking that the gpu is bound by vfio before starting the vm
     - allocating hugepages
     - reserving cores for vm
     - unmounting drives passed to vm to avoid corruption
+- `startWin11.sh` script for starting vm and automatically disabling monitor given to vm. It re-enables the monitor when the vm shuts down. It works with both hyprland and kde, and it sends notifications for failures and vm shutdown. Use `Win11.desktop` to use the script as an application.
+- `bind.sh` script for binding either vfio or nvidia modules without having to reboot
+> [!NOTE]
+> unbinding nvidia modules requires killing all processes using the gpu, including the window manager
+- scripts to quickly add or remove xbox controller and samson mic to (running) vm
+- udev rules to automatically add and remove xbox controller and samson mic to vm when plugged in/unplugged (mic only has the remove part, since i don'twant to always add it to the vm). This is to prevent the vm from failing to boot up because i forgot to remove the devices from its configuration after unplugging them.
 
 ---
 
