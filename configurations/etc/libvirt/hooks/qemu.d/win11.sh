@@ -47,10 +47,10 @@ function activate_hugepages {
 
 
 if [ "$command" = "prepare" ]; then
-	vfioIds=$(sed 's/.*vfio-pci ids=//' < /etc/modprobe.d/vfio.conf)
+	vfioIds=$(grep -oP '^options vfio-pci ids=\K[\w:,]+' < /etc/modprobe.d/vfio.conf)
 	res=false
 
-	# Check if at least one of the ids of gpu that should be bound by vfio show up in dmesg
+	# Check if at least one of the ids of gpu that should be bound by vfio show up
 	for vfioId in ${vfioIds//,/ }
 	do
 	    if [[ "$(lspci -nnk -d $vfioId)" == *"vfio-pci"* ]]; then
